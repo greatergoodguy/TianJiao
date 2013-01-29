@@ -1,0 +1,18 @@
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+#java specific
+*.class
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+R.java
