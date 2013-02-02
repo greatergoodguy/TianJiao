@@ -82,7 +82,7 @@ public class MainMenuActivity extends BBSGameActivity implements GameConstants{
 			@Override
 			public void onClick() {
 				long delayMillis = 200;
-				handler.postDelayed(launchAnimationViewerActivity, delayMillis);	
+				handler.postDelayed(launchTamagotchiActivity, delayMillis);	
 			}
 		});
 		tamagotchiButton.setPosition(800, 500);
@@ -104,6 +104,13 @@ public class MainMenuActivity extends BBSGameActivity implements GameConstants{
 	private Runnable launchAnimationViewerActivity = new Runnable(){
 		public void run(){
 			Intent myIntent = new Intent(MainMenuActivity.this, AnimationViewerActivity.class);
+			startActivity(myIntent);
+		}
+	};
+
+	private Runnable launchTamagotchiActivity = new Runnable(){
+		public void run(){
+			Intent myIntent = new Intent(MainMenuActivity.this, TamagotchiActivity.class);
 			startActivity(myIntent);
 		}
 	};

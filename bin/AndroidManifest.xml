@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
 		<activity android:name=".AnimationViewerActivity" android:configChanges="orientation"/>
+		<activity android:name=".TamagotchiActivity" android:configChanges="orientation"/>
     </application>
 
 </manifest>
