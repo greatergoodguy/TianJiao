@@ -7,13 +7,13 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.burstingbrains.sharedlibs.universe.Universe;
 
-public class OneStateButton extends Entity{
+public class OneStateSpriteButton extends Entity{
 
 	private IBBOnClickListener bbOnClickListener;
 	
 	private Sprite sprite1;
 	
-	public OneStateButton(Universe universe, ITextureRegion textureRegion1){
+	public OneStateSpriteButton(Universe universe, ITextureRegion textureRegion1){
 		super(0, 0);
 		
 		bbOnClickListener = ButtonUtil.dummyBBOnClickListener;

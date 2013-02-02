@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="tj_run.png" type="bitmap" width="487" height="147" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://texturepacker.com -->
+    <!-- $TexturePacker:SmartUpdate:aecda2cb103c1a898bd70907a39aa29e$ -->
+    <textureregion id="0" src="tj_run1.png" x="3" y="3" width="158" height="137" rotated="false" trimmed="true" srcx="7" srcy="35" srcwidth="182" srcheight="173"/>
+    <textureregion id="1" src="tj_run2.png" x="167" y="3" width="148" height="141" rotated="false" trimmed="true" srcx="17" srcy="30" srcwidth="182" srcheight="173"/>
+    <textureregion id="2" src="tj_run3.png" x="321" y="3" width="160" height="139" rotated="false" trimmed="true" srcx="5" srcy="34" srcwidth="182" srcheight="173"/>
+</texture>

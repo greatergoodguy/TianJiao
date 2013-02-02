@@ -1,8 +1,5 @@
 package org.burstingbrains.tianjiao.assets;
 
-import org.andengine.opengl.font.FontFactory;
-import org.andengine.opengl.font.IFont;
-import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -11,38 +8,39 @@ import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSourc
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.debug.Debug;
 import org.burstingbrains.sharedlibs.andengineext.BBSGameActivity;
 import org.burstingbrains.sharedlibs.universe.IAssets;
 
-public class MainMenuAssets implements IAssets{
+public class AnimationViewerAssets implements IAssets{
 
-	private static final MainMenuAssets assetsMainMenuSingleton = new MainMenuAssets();
+	private static final AnimationViewerAssets assetsAnimationViewerSingleton = new AnimationViewerAssets();
 	
-	public IFont addElectricCityFont;
 
 	private BuildableBitmapTextureAtlas tianJiaoTexture;
 	public ITextureRegion tjRun1TR;
 	public ITextureRegion tjRun2TR;
 	public ITextureRegion tjStandingTR;
 	
+	private BuildableBitmapTextureAtlas tjRunningTexture;
+	public TiledTextureRegion tjRunningTTR;
+	
 	public boolean isInitialized;
 	
-	private MainMenuAssets(){
+	private AnimationViewerAssets(){
 		isInitialized = false;
 	}
 	
 
-	public static MainMenuAssets getSingleton(){
-		return assetsMainMenuSingleton;
+	public static AnimationViewerAssets getSingleton(){
+		return assetsAnimationViewerSingleton;
 	}
 	
 	
 	@Override
 	public void init(BBSGameActivity bbsGameActivity) {
-		FontFactory.setAssetBasePath("font/");
-		final ITexture fontTexture = new BitmapTextureAtlas(bbsGameActivity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
-		addElectricCityFont = FontFactory.createFromAsset(bbsGameActivity.getFontManager(), fontTexture, bbsGameActivity.getAssets(), "add_electric_city.ttf", 65, true, android.graphics.Color.CYAN);
+		
 		
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("art/TianJiao/");
 		tianJiaoTexture = new BuildableBitmapTextureAtlas(bbsGameActivity.getTextureManager(), 2048, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -56,22 +54,31 @@ public class MainMenuAssets implements IAssets{
 		}
 		
 		
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("anim/TianJiao/");
+		tjRunningTexture = new BuildableBitmapTextureAtlas(bbsGameActivity.getTextureManager(), 1024, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		tjRunningTTR = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(tjRunningTexture, bbsGameActivity, "tj_run.png", 3, 1);
+		try{
+			tjRunningTexture.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(1, 1, 1));
+		} catch (final TextureAtlasBuilderException e) {
+			Debug.e(e);
+		}
+		
 		isInitialized = true;
 	}
 
 	@Override
 	public void load() {
 		if(isInitialized){
-			addElectricCityFont.load();
 			tianJiaoTexture.load();
+			tjRunningTexture.load();
 		}
 	}
 
 	@Override
 	public void unload() {
 		if(isInitialized){
-			addElectricCityFont.unload();
 			tianJiaoTexture.unload();
+			tjRunningTexture.unload();
 		}
 	}
 

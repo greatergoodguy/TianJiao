@@ -9,16 +9,25 @@ import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
 import org.burstingbrains.sharedlibs.andengineext.BBSGameActivity;
-import org.burstingbrains.sharedlibs.andengineext.buttons.OneStateButton;
+import org.burstingbrains.sharedlibs.andengineext.buttons.IBBOnClickListener;
+import org.burstingbrains.sharedlibs.andengineext.buttons.OneStateSpriteButton;
+import org.burstingbrains.sharedlibs.andengineext.buttons.OneStateTextButton;
 import org.burstingbrains.sharedlibs.universe.Universe;
 import org.burstingbrains.tianjiao.assets.MainMenuAssets;
 import org.burstingbrains.tianjiao.constants.GameConstants;
 
+import android.content.Intent;
+import android.os.Handler;
+
 public class MainMenuActivity extends BBSGameActivity implements GameConstants{
 	private MainMenuAssets assets = MainMenuAssets.getSingleton();
 	
+	private Handler handler;
+	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
+		handler = new Handler();
+		
 		Camera camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 
 		final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new FillResolutionPolicy(), camera);
@@ -47,20 +56,56 @@ public class MainMenuActivity extends BBSGameActivity implements GameConstants{
 		
 		Sprite tjRun1Sprite = new Sprite(0, 0, assets.tjRun1TR, this.getVertexBufferObjectManager());		
 		Sprite tjRun2Sprite = new Sprite(200, 200, assets.tjRun2TR, this.getVertexBufferObjectManager());
-		Sprite tjStandingSprite = new Sprite(400, 400, assets.tjStandingTR, this.getVertexBufferObjectManager());
-		OneStateButton tjRun1Button = new OneStateButton(universe, assets.tjRun1TR);
-		tjRun1Button.setPosition(800, 200);
+		Sprite tjStandingSprite = new Sprite(400, 400, assets.tjStandingTR, this.getVertexBufferObjectManager());		
+		OneStateTextButton animationViewerButton = new OneStateTextButton(universe, assets.addElectricCityFont, "Animation");
+		animationViewerButton.registerOnClickListener(new IBBOnClickListener() {
+			@Override
+			public void onClick() {
+				long delayMillis = 200;
+				handler.postDelayed(launchAnimationViewerActivity, delayMillis);	
+			}
+		});
+		animationViewerButton.setPosition(800, 100);
 		
+		OneStateTextButton storyBookButton = new OneStateTextButton(universe, assets.addElectricCityFont, "Story Book");
+		storyBookButton.registerOnClickListener(new IBBOnClickListener() {
+			@Override
+			public void onClick() {
+				long delayMillis = 200;
+				handler.postDelayed(launchAnimationViewerActivity, delayMillis);	
+			}
+		});
+		storyBookButton.setPosition(800, 300);
+		
+		OneStateTextButton tamagotchiButton = new OneStateTextButton(universe, assets.addElectricCityFont, "Tamagotchi");
+		tamagotchiButton.registerOnClickListener(new IBBOnClickListener() {
+			@Override
+			public void onClick() {
+				long delayMillis = 200;
+				handler.postDelayed(launchAnimationViewerActivity, delayMillis);	
+			}
+		});
+		tamagotchiButton.setPosition(800, 500);
 		
 		universe.attachChild(tjRun1Sprite);
 		universe.attachChild(tjRun2Sprite);
 		universe.attachChild(tjStandingSprite);
-		universe.attachChild(tjRun1Button);
-		universe.registerTouchArea(tjRun1Button.getTouchArea());
-		
+		universe.attachChild(animationViewerButton);
+		universe.attachChild(storyBookButton);
+		universe.attachChild(tamagotchiButton);
+		universe.registerTouchArea(animationViewerButton.getTouchArea());
+		universe.registerTouchArea(storyBookButton.getTouchArea());
+		universe.registerTouchArea(tamagotchiButton.getTouchArea());
 		
 		
 		return mainScene;
 	}
+	
+	private Runnable launchAnimationViewerActivity = new Runnable(){
+		public void run(){
+			Intent myIntent = new Intent(MainMenuActivity.this, AnimationViewerActivity.class);
+			startActivity(myIntent);
+		}
+	};
 
 }
