@@ -2,10 +2,9 @@ package org.burstingbrains.tianjiao.tamagotchi;
 
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.sprite.AnimatedSprite;
-import org.burstingbrains.tianjiao.assets.TamagotchiAssets;
 
 public class TJWalkScript implements IUpdateHandler{
-	private final static float WALK_SPEED = 400;
+	private final static float WALK_SPEED = 40;
 	
 	private final static float START_POS_X = 800;
 	private final static float START_POS_Y = 530;

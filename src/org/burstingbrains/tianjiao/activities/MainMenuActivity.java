@@ -1,4 +1,4 @@
-package org.burstingbrains.tianjiao.activities;
+ package org.burstingbrains.tianjiao.activities;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
@@ -72,7 +72,7 @@ public class MainMenuActivity extends BBSGameActivity implements GameConstants{
 			@Override
 			public void onClick() {
 				long delayMillis = 200;
-				handler.postDelayed(launchAnimationViewerActivity, delayMillis);	
+				handler.postDelayed(launchStorybookActivity, delayMillis);	
 			}
 		});
 		storyBookButton.setPosition(800, 300);
@@ -111,6 +111,13 @@ public class MainMenuActivity extends BBSGameActivity implements GameConstants{
 	private Runnable launchTamagotchiActivity = new Runnable(){
 		public void run(){
 			Intent myIntent = new Intent(MainMenuActivity.this, TamagotchiActivity.class);
+			startActivity(myIntent);
+		}
+	};
+
+	private Runnable launchStorybookActivity = new Runnable(){
+		public void run(){
+			Intent myIntent = new Intent(MainMenuActivity.this, StorybookActivity.class);
 			startActivity(myIntent);
 		}
 	};

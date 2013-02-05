@@ -4,21 +4,24 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.sprite.AnimatedSprite;
-import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
+import org.andengine.input.touch.TouchEvent;
 import org.burstingbrains.sharedlibs.andengineext.BBSGameActivity;
 import org.burstingbrains.sharedlibs.universe.Universe;
-import org.burstingbrains.tianjiao.assets.TamagotchiAssets;
+import org.burstingbrains.tianjiao.assets.StorybookAssets;
 import org.burstingbrains.tianjiao.constants.GameConstants;
-import org.burstingbrains.tianjiao.tamagotchi.TJWalkScript;
+import org.burstingbrains.tianjiao.storybook.StorybookWorld;
+
+import android.util.Log;
 
 
 
-public class TamagotchiActivity extends BBSGameActivity implements GameConstants{
-	private TamagotchiAssets assets = TamagotchiAssets.getSingleton();
+public class StorybookActivity extends BBSGameActivity implements IOnSceneTouchListener, GameConstants{
+	private StorybookAssets assets = StorybookAssets.getSingleton();
+	
+	private StorybookWorld world;
 	
 	@Override
 	public EngineOptions onCreateEngineOptions() {
@@ -47,24 +50,22 @@ public class TamagotchiActivity extends BBSGameActivity implements GameConstants
 		Scene mainScene = new Scene();
 		Universe universe = new Universe(this, mainScene);
 		
-		mainScene.setBackground(new Background(0.09804f, 0.6274f, 0.8784f));
+		world = new StorybookWorld(universe);
 		
-		final Sprite background = new Sprite(0, 0, assets.backgroundTR, this.getVertexBufferObjectManager());
-		background.setPosition(CAMERA_WIDTH_OVER_TWO - background.getWidth()/2, CAMERA_HEIGHT_OVER_TWO - background.getHeight()/2);
-		float scaleX = CAMERA_WIDTH / background.getWidth();
-		float scaleY = CAMERA_HEIGHT / background.getHeight();
-		background.setScale(scaleX, scaleY);
-		mainScene.attachChild(background);
+//		gameScene.setOnAreaTouchTraversalFrontToBack();
+//		gameScene.setTouchAreaBindingOnActionDownEnabled(true);
+		mainScene.setOnSceneTouchListener(this);
 		
-		
-		AnimatedSprite tjRunning = new AnimatedSprite(0, 0, assets.tjRunningTTR, this.getVertexBufferObjectManager());
-		tjRunning.animate(400);
-		
-		universe.attachChild(tjRunning);
-		
-		universe.registerUpdateHandler(new TJWalkScript(tjRunning));
 		
 		return mainScene;
+	}
+
+	@Override
+	public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+		if(pSceneTouchEvent.isActionDown())
+			world.doNext();
+		
+		return false;
 	}
 
 }
