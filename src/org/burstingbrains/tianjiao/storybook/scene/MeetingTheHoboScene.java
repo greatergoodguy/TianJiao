@@ -7,6 +7,7 @@ import org.burstingbrains.tianjiao.storybook.StorybookBackground;
 import org.burstingbrains.tianjiao.storybook.TianJiao;
 import org.burstingbrains.tianjiao.storybook.scene.meetingthehobo.Act1;
 import org.burstingbrains.tianjiao.storybook.scene.meetingthehobo.Act2;
+import org.burstingbrains.tianjiao.storybook.scene.meetingthehobo.TextAct;
 
 import android.util.Log;
 
@@ -21,6 +22,8 @@ public class MeetingTheHoboScene implements IScene{
 	private IAct activeAct;
 	private int activeActIndex;
 	
+	
+	
 	public MeetingTheHoboScene(StorybookBackground background, TianJiao tianJiao){
 		this.background = background;
 		this.tianJiao = tianJiao;
@@ -29,6 +32,7 @@ public class MeetingTheHoboScene implements IScene{
 		
 		acts.add(new Act1(tianJiao));
 		acts.add(new Act2(tianJiao));
+		acts.add(new TextAct("Hello mister hobo. How do you do? The weather is nice today."));
 		
 		reset();
 	}

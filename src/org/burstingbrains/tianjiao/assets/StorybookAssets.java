@@ -1,5 +1,8 @@
 package org.burstingbrains.tianjiao.assets;
 
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.font.IFont;
+import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -14,8 +17,12 @@ import org.burstingbrains.sharedlibs.andengineext.BBSGameActivity;
 import org.burstingbrains.sharedlibs.universe.IAssets;
 
 public class StorybookAssets implements IAssets{
-
 	private static final StorybookAssets assetsStorybookSingleton = new StorybookAssets();
+	
+	private static final int STORYBOOK_FONT_SIZE = 45;
+	
+	public IFont storybookFont;
+	public IFont nameTagFont;
 	
 	public BitmapTextureAtlas housesBGTexture;
 	public ITextureRegion housesBG;
@@ -38,14 +45,17 @@ public class StorybookAssets implements IAssets{
 		isInitialized = false;
 	}
 	
-
 	public static StorybookAssets getSingleton(){
 		return assetsStorybookSingleton;
 	}
 	
-	
 	@Override
 	public void init(BBSGameActivity bbsGameActivity) {
+		
+		FontFactory.setAssetBasePath("font/");
+		final ITexture fontTexture = new BitmapTextureAtlas(bbsGameActivity.getTextureManager(), 512, 512, TextureOptions.BILINEAR);
+		storybookFont = FontFactory.createFromAsset(bbsGameActivity.getFontManager(), fontTexture, bbsGameActivity.getAssets(), "apple_garamond.ttf", 
+				STORYBOOK_FONT_SIZE, true, android.graphics.Color.BLACK);
 		
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("art/bg/");
 		housesBGTexture = new BitmapTextureAtlas(bbsGameActivity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -89,6 +99,8 @@ public class StorybookAssets implements IAssets{
 	@Override
 	public void load() {
 		if(isInitialized){
+			storybookFont.load();
+			
 			housesBGTexture.load();
 			tianJiaoTexture.load();
 			tjRunningTexture.load();
@@ -100,6 +112,8 @@ public class StorybookAssets implements IAssets{
 	@Override
 	public void unload() {
 		if(isInitialized){
+			storybookFont.unload();
+			
 			housesBGTexture.unload();
 			tianJiaoTexture.unload();
 			tjRunningTexture.unload();

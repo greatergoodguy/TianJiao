@@ -11,6 +11,8 @@ import org.burstingbrains.tianjiao.storybook.scene.MeetingTheHoboScene;
 public class StorybookWorld implements IUpdateHandler, GameConstants{
 	private StorybookAssets assets = StorybookAssets.getSingleton();
 	
+	private TextBoxManagerSingleton textBoxManager = TextBoxManagerSingleton.getSingleton();
+	
 	private StorybookBackground background;
 	
 	private TianJiao tianJiao;
@@ -20,14 +22,22 @@ public class StorybookWorld implements IUpdateHandler, GameConstants{
 
 	public StorybookWorld(Universe universe){
 		
+		textBoxManager.init(universe);
+		
 		background = new StorybookBackground(universe);
 		tianJiao = new TianJiao(universe);
 		selectionMenu = new SelectionMenu();
 		
 		Sprite rewind = new Sprite(0, 0, assets.uiRewindTR, universe.getVertexBufferObjectManager());
 		Sprite fastforward = new Sprite(0, 0, assets.uiFastforwardTR, universe.getVertexBufferObjectManager());
+		rewind.setPosition(1130, 210);
+		fastforward.setPosition(1130, 650);
+		
+		
+		
 		
 		universe.attachChild(background.getEntity());
+		universe.attachChild(textBoxManager.getEntity());
 		universe.attachChild(tianJiao.getEntity());
 		
 		universe.attachChild(rewind);
